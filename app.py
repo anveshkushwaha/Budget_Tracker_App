@@ -10,7 +10,7 @@ app.secret_key = 'tracker_secret_key_123'
 
 # 🔑 STEP 1 VALA EXTERNAL DATABASE URL YAHAN PASTE KARNA HAI
 # Example: "postgres://user:password@host:port/dbname"
-DB_URL = "YAHAN_APNA_RENDER_POSTGRES_EXTERNAL_URL_PASTE_KARO"
+DB_URL = "postgresql://budget_tracker_db_udnb_user:kjMCXok7mMN38uDlhgraVc8fFq0Y55nl@dpg-d8fv36f40ujc73bgce30-a.singapore-postgres.render.com/budget_tracker_db_udnb"
 GRAPH_FOLDER = os.path.join('static', 'graphs')
 os.makedirs(GRAPH_FOLDER, exist_ok=True)
 
