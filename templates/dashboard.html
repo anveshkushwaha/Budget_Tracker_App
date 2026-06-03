@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    
+    <div class="summary-cards">
+        <div class="card income">
+            <h3>Total Income</h3>
+            <p>₹{{ total_income }}</p>
+        </div>
+        <div class="card expense">
+            <h3>Total Expenses</h3>
+            <p>₹{{ total_expense }}</p>
+        </div>
+        <div class="card balance">
+            <h3>Net Balance</h3>
+            <p>₹{{ balance }}</p>
+        </div>
+    </div>
+
+    <div class="dashboard-main">
+        <div class="form-section">
+            <h3>Add New Transaction</h3>
+            <form action="{{ url_for('dashboard') }}" method="POST">
+                <div class="input-group">
+                    <label for="amount">Amount (₹)</label>
+                    <input type="number" step="0.01" id="amount" name="amount" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="type">Type</label>
+                    <select id="type" name="type" required>
+                        <option value="Income">Income</option>
+                        <option value="Expense">Expense</option>
+                    </select>
+                </div>
+                
+                <div class="input-group">
+                    <label for="category">Category</label>
+                    <select id="category" name="category" required>
+                        <option value="Food">Food</option>
+                        <option value="Gaming">Gaming</option>
+                        <option value="Shopping">Shopping</option>
+                        <option value="Salary">Salary</option>
+                        <option value="Others">Others</option>
+                    </select>
+                </div>
+                
+                <div class="input-group">
+                    <label for="description">Description</label>
+                    <input type="text" id="description" name="description" autocomplete="off">
+                </div>
+                
+                <button type="submit" class="btn-submit">Add Transaction</button>
+            </form>
+        </div>
+
+        <div class="graph-section">
+            <h3>Expense Analytics</h3>
+            {% if total_expense > 0 %}
+                <img src="{{ url_for('static', filename='graphs/chart_user_' ~ session['user_id'] ~ '.png') }}" alt="Expense Chart" class="chart-img">
+            {% else %}
+                <p class="no-data">No expense data available to generate chart.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="history-section">
+        <h3>Transaction History</h3>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Category</th>
+                        <th>Amount</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for t in transactions %}
+                    <tr class="{{ t[3]|lower }}">
+                        <td>{{ t[3] }}</td>
+                        <td>{{ t[4] }}</td>
+                        <td>₹{{ t[2] }}</td>
+                        <td>{{ t[5] if t[5] else '-' }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
